@@ -2,9 +2,9 @@ package note
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"time"
 )
 
@@ -25,9 +25,8 @@ func New(str string) Note {
 
 /*Add addds a new note to the note list and saves it to the file*/
 func Add(n Note) {
-	notes, err := getNotes()
+	notes, err := GetNotes()
 	if err != nil {
-		//panic(err)
 		log.Fatal(err)
 	}
 
@@ -35,37 +34,20 @@ func Add(n Note) {
 
 	err = saveNotes(notes)
 	if err != nil {
-		//panic(err)
 		log.Fatal(err)
 	}
 
 }
 
-func saveNotes(notes []Note) error {
-	list, err := getNotes()
+/*GetNotes returns the list of notes*/
+func GetNotes() ([]Note, error) {
+	f, err := os.OpenFile("note/notes.json", os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	list = append(notes)
-
-	b, err := json.MarshalIndent(list, "", "\t")
+	b, err := ioutil.ReadAll(f)
 	if err != nil {
-		return err
-	}
-
-	err = ioutil.WriteFile("note/notes.json", b, 0644) // 0 - file, 1 - x (execute), 2 - w (write), 4 - r (read)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func getNotes() ([]Note, error) {
-	b, err := ioutil.ReadFile("note/notes.json")
-	if err != nil {
-		fmt.Println("error1")
 		return nil, err
 	}
 
@@ -76,9 +58,22 @@ func getNotes() ([]Note, error) {
 	}
 
 	if err != nil {
-		fmt.Println("error2")
 		return nil, err
 	}
 
 	return notes, nil
+}
+
+func saveNotes(notes []Note) error {
+	b, err := json.MarshalIndent(notes, "", "\t")
+	if err != nil {
+		return err
+	}
+
+	err = ioutil.WriteFile("note/notes.json", b, 0644) // 0 - file, 1 - x (execute), 2 - w (write), 4 - r (read)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
