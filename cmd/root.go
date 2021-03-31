@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Joshua152/jot/note"
 	"github.com/spf13/cobra"
 )
 
@@ -12,17 +11,11 @@ var (
 	Verbose bool
 
 	rootCmd = &cobra.Command{
-		Use:   "jot [note(s)]",
+		Use:   "jot",
 		Short: "Jot is a CLI note jotting interface",
 		Long:  `Jot is a CLI program quickly jot down notes and or ideas`,
 		Run: func(cmd *cobra.Command, args []string) {
-			if len(args) == 0 {
-				cmd.Help()
-			}
-
-			for _, s := range args {
-				note.Add(note.New(s))
-			}
+			cmd.Help()
 		},
 	}
 )
@@ -30,7 +23,9 @@ var (
 func init() {
 	rootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "Output all info")
 
+	rootCmd.AddCommand(addCmd)
 	rootCmd.AddCommand(getCmd)
+	rootCmd.AddCommand(removeCmd)
 }
 
 func Execute() {

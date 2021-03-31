@@ -23,7 +23,7 @@ func New(str string) Note {
 	return note
 }
 
-/*Add addds a new note to the note list and saves it to the file*/
+/*Add adds a new note to the note list and saves it to the file*/
 func Add(n Note) {
 	notes, err := GetNotes()
 	if err != nil {
@@ -36,7 +36,21 @@ func Add(n Note) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
 
+/*Remove deletes a note from the slice at the specified index*/
+func Remove(index int) {
+	notes, err := GetNotes()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	notes = append(notes[:index], notes[index+1:]...)
+
+	err = saveNotes(notes)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 /*GetNotes returns the list of notes*/

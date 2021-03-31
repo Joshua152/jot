@@ -17,6 +17,10 @@ var getCmd = &cobra.Command{
 			log.Fatal(err)
 		}
 
+		if len(args) == 0 {
+			fmt.Println("No notes. Add notes using 'jot add'.")
+		}
+
 		for i, n := range notes {
 			fmt.Printf("%d) %s", i+1, n.Note)
 
