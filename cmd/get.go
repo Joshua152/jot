@@ -17,7 +17,7 @@ var getCmd = &cobra.Command{
 			log.Fatal(err)
 		}
 
-		if len(args) == 0 {
+		if len(notes) == 0 {
 			fmt.Println("No notes. Add notes using 'jot add'.")
 		}
 
