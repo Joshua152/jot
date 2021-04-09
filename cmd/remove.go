@@ -21,14 +21,19 @@ var (
 		Long:    `Removes the note(s) at the number or range given (ex. 10, 1:20, :20, 20:) (inclusive)`,
 		Aliases: []string{"rem", "del"},
 		Run: func(cmd *cobra.Command, args []string) {
-			if len(args) == 0 {
-				cmd.Help()
-				return
-			}
-
 			notes, err := note.GetNotes()
 			if err != nil {
 				log.Fatal(err)
+			}
+
+			if all {
+				remove(1, len(notes))
+				return
+			}
+
+			if len(args) == 0 {
+				cmd.Help()
+				return
 			}
 
 			if all {
