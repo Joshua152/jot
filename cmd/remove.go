@@ -36,11 +36,6 @@ var (
 				return
 			}
 
-			if all {
-				remove(1, len(notes))
-				return
-			}
-
 			for _, str := range args {
 				split := strings.Split(str, "")
 				start := 0
