@@ -2,7 +2,6 @@ package note
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -24,8 +23,6 @@ type Note struct {
 /*New creates a new note*/
 func New(str string) Note {
 	note := Note{Note: str, TimeCreated: time.Now().Local().String()}
-
-	fmt.Println("Writing to a file... hopefully")
 
 	log.SetOutput(logging.GetLogFile())
 	log.SetPrefix("note.go: ")
