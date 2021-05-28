@@ -1,0 +1,11 @@
+cmd: root.go:32: log
+cmd: root.go:32: log
+cmd: root.go:32: log
+cmd: root.go:32: log
+cmd: root.go:32: log
+cmd: root.go:32: log
+cmd: root.go:32: log
+cmd: root.go:32: log
+
+cmd: root.go:32: log
+Hey there

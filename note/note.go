@@ -2,10 +2,17 @@ package note
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"time"
+
+	"github.com/Joshua152/jot/logging"
+)
+
+var (
+	notePath = `.\note\notes.json`
 )
 
 /*Note represents a single note*/
@@ -18,6 +25,10 @@ type Note struct {
 func New(str string) Note {
 	note := Note{Note: str, TimeCreated: time.Now().Local().String()}
 
+	fmt.Println("Writing to a file... hopefully")
+
+	log.SetOutput(logging.GetLogFile())
+	log.SetPrefix("note.go: ")
 	log.SetFlags(log.Lshortfile)
 
 	return note
@@ -27,14 +38,14 @@ func New(str string) Note {
 func Add(n Note) {
 	notes, err := GetNotes()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	notes = append(notes, n)
 
 	err = saveNotes(notes)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 }
 
@@ -49,13 +60,13 @@ func Remove(index int) {
 
 	err = saveNotes(notes)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 }
 
 /*GetNotes returns the list of notes*/
 func GetNotes() ([]Note, error) {
-	f, err := os.OpenFile("note/notes.json", os.O_CREATE|os.O_RDWR, 0644)
+	f, err := os.OpenFile(notePath, os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +95,7 @@ func saveNotes(notes []Note) error {
 		return err
 	}
 
-	err = ioutil.WriteFile("note/notes.json", b, 0644) // 0 - file, 1 - x (execute), 2 - w (write), 4 - r (read)
+	err = ioutil.WriteFile(notePath, b, 0644) // 0 - file, 1 - x (execute), 2 - w (write), 4 - r (read)
 	if err != nil {
 		return err
 	}

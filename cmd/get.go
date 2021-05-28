@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/Joshua152/jot/note"
+	"github.com/Joshua152/jot/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -14,6 +15,7 @@ var getCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		notes, err := note.GetNotes()
 		if err != nil {
+			fmt.Println(utils.ErrUnableToRetrieveNotesFile, err)
 			log.Fatal(err)
 		}
 

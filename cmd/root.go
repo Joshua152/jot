@@ -2,8 +2,10 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 
+	"github.com/Joshua152/jot/logging"
 	"github.com/spf13/cobra"
 )
 
@@ -22,6 +24,11 @@ var (
 
 func init() {
 	rootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "Output all info")
+
+	// close file?
+	log.SetOutput(logging.GetLogFile())
+	log.SetPrefix("cmd: ")
+	log.SetFlags(log.Lshortfile)
 
 	rootCmd.AddCommand(addCmd)
 	rootCmd.AddCommand(getCmd)

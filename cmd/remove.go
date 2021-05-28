@@ -3,16 +3,16 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 
 	"github.com/Joshua152/jot/note"
+	"github.com/Joshua152/jot/utils"
 	"github.com/spf13/cobra"
 )
 
 var (
-	errInvalidRange = fmt.Errorf("invalid number/range")
-
 	all bool
 
 	removeCmd = &cobra.Command{
@@ -24,6 +24,7 @@ var (
 			notes, err := note.GetNotes()
 			if err != nil {
 				log.Fatal(err)
+				fmt.Println(utils.ErrUnableToRetrieveNotesFile)
 			}
 
 			if all {
@@ -32,7 +33,7 @@ var (
 			}
 
 			if len(args) == 0 {
-				cmd.Help()
+				fmt.Println(utils.ErrRequiresAnArgument)
 				return
 			}
 
@@ -68,7 +69,7 @@ var (
 					end, err = strconv.Atoi(split[2])
 					checkErrInvalidRange(err)
 				} else {
-					log.Fatal(errInvalidRange)
+					fmt.Println(utils.ErrInvalidArgument)
 				}
 
 				remove(start, end)
@@ -90,6 +91,7 @@ func remove(start, end int) {
 
 func checkErrInvalidRange(err error) {
 	if err != nil {
-		log.Fatal(errInvalidRange)
+		fmt.Println(utils.ErrInvalidArgument)
+		os.Exit(1)
 	}
 }
