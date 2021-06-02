@@ -72,6 +72,12 @@ var (
 					fmt.Println(utils.ErrInvalidArgument)
 				}
 
+				if start < 1 || end > len(notes) {
+					fmt.Println(utils.ErrInvalidArgument)
+
+					return
+				}
+
 				remove(start, end)
 			}
 		},
