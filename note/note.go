@@ -5,13 +5,15 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/Joshua152/jot/logging"
+	"github.com/Joshua152/jot/utils"
 )
 
 var (
-	notePath = `.\note\notes.json`
+	notePath = filepath.Join(utils.GetAppDataDir(), "notes.json")
 )
 
 /*Note represents a single note*/

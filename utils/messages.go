@@ -8,7 +8,6 @@ var (
 
 	ErrUnableToRetrieveNotesFile = fmt.Errorf("unable to retrieve notes file")
 
-	ErrUnableToGetExeDir = fmt.Errorf("unable to get exe directory")
-
-	MsgUnableToOpenLogFile = "unable to open logging file; no logging will occur"
+	MsgUnableToGetLocalAppDataDir = `unable to open path to C:\users\[user]\AppData\Local`
+	MsgUnableToOpenLogFile        = "unable to open logging file; no logging will occur"
 )
